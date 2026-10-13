@@ -1,0 +1,126 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px 20px;
+}
+
+.app {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+h1 { text-align: center; color: #333; margin-bottom: 20px; }
+
+.balance-card {
+  background: linear-gradient(135deg, #f5576c, #f093fb);
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.balance-label { font-size: 0.9rem; opacity: 0.9; }
+.balance-amount { font-size: 2.2rem; font-weight: bold; margin-top: 5px; }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form input,
+.form select {
+  padding: 12px;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.form input:focus,
+.form select:focus {
+  outline: none;
+  border-color: #f5576c;
+}
+
+.form button {
+  padding: 12px;
+  background: #f5576c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.form button:hover { background: #d9455a; }
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+  font-size: 0.85rem;
+}
+
+.summary span {
+  background: #f7f7fa;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: #555;
+}
+
+.expense-list { list-style: none; margin-bottom: 15px; }
+
+.expense-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-left: 4px solid #f5576c;
+  background: #fafafa;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.expense-list li .info { flex: 1; }
+.expense-list li .desc { font-weight: bold; color: #333; }
+.expense-list li .cat { font-size: 0.8rem; color: #888; }
+.expense-list li .amt { font-weight: bold; color: #f5576c; margin-right: 10px; }
+
+.expense-list li button {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.expense-list li button:hover { color: #dc3545; }
+
+.clear-all {
+  width: 100%;
+  padding: 12px;
+  background: #eee;
+  color: #666;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.clear-all:hover { background: #ddd; }
