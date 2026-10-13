@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1e1e2f;
+      font-family: Arial, sans-serif;
+    }
+    .calculator {
+      background: #2b2b3d;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      width: 320px;
+    }
+    .display {
+      background: #111;
+      color: #0f0;
+      font-size: 2rem;
+      text-align: right;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      min-height: 60px;
+      word-wrap: break-word;
+      overflow: hidden;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    button {
+      padding: 18px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background: #3d3d5c;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    button:hover { background: #50507a; }
+    button.operator { background: #ff9500; }
+    button.operator:hover { background: #ffad33; }
+    button.equal { background: #28a745; }
+    button.equal:hover { background: #34ce57; }
+    button.clear { background: #dc3545; }
+    button.clear:hover { background: #e4606d; }
+    button.span-two { grid-column: span 2; }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button onclick="deleteLast()">⌫</button>
+      <button class="operator" onclick="appendValue('%')">%</button>
+      <button class="operator" onclick="appendValue('/')">÷</button>
+
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button class="operator" onclick="appendValue('*')">×</button>
+
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button class="operator" onclick="appendValue('-')">−</button>
+
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+      <button class="operator" onclick="appendValue('+')">+</button>
+
+      <button class="span-two" onclick="appendValue('0')">0</button>
+      <button onclick="appendValue('.')">.</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    let current = '0';
+
+    // Update what is shown on the display
+    function updateDisplay() {
+      display.textContent = current;
+    }
+
+    // Append a character (digit or operator) to the current input
+    function appendValue(value) {
+      // Avoid leading zeros like "05"
+      if (current === '0' && value !== '.') {
+        current = value;
+      } else {
+        current += value;
+      }
+      updateDisplay();
+    }
+
+    // Clear everything
+    function clearDisplay() {
+      current = '0';
+      updateDisplay();
+    }
+
+    // Remove the last character
+    function deleteLast() {
+      if (current.length === 1) {
+        current = '0';
+      } else {
+        current = current.slice(0, -1);
+      }
+      updateDisplay();
+    }
+
+    // Evaluate the expression safely
+    function calculate() {
+      try {
+        // Only allow digits, operators, dot, parentheses, spaces, and %
+        if (!/^[0-9+\-*/%.() ]+$/.test(current)) {
+          display.textContent = 'Error';
+          current = '0';
+          return;
+        }
+        // Replace % with /100 for simple percentage support
+        let expression = current.replace(/%/g, '/100');
+        let result = eval(expression);
+
+        if (!isFinite(result)) {
+          display.textContent = 'Error';
+          current = '0';
+        } else {
+          current = String(result);
+          updateDisplay();
+        }
+      } catch (e) {
+        display.textContent = 'Error';
+        current = '0';
+      }
+    }
+
+    // Keyboard support
+    document.addEventListener('keydown', function (e) {
+      const key = e.key;
+      if (/[0-9]/.test(key) || ['+', '-', '*', '/', '.', '%'].includes(key)) {
+        appendValue(key);
+      } else if (key === 'Enter' || key === '=') {
+        e.preventDefault();
+        calculate();
+      } else if (key === 'Backspace') {
+        deleteLast();
+      } else if (key.toLowerCase() === 'c') {
+        clearDisplay();
+      }
+    });
+  </script>
+</body>
+</html>
